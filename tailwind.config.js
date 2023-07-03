@@ -9,7 +9,8 @@ export const theme = {
       'primary-grey': '#181E29',
       'primary-lite': '#C9CED6',
       "white": '#FFFFFF'
-    }
+    },
+    dackMode: "class"
   }
 }
 export const plugins = [];
