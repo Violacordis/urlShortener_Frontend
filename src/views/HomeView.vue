@@ -24,5 +24,14 @@
       <li>Click Steam</li>
       <li>Settings</li>
     </ul>
+    <section class="max-w-2xl w-11/12 mx-auto">
+      <div class="flex items-center justify-between">
+        <h2>History(143)</h2>
+        <div class="flex items-center gap-2">
+          <p>bulk edit</p>
+          <p>Filter</p>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
