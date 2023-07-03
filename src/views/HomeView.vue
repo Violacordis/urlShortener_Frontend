@@ -32,6 +32,37 @@
           <p>Filter</p>
         </div>
       </div>
+      <div class="overflow-x-scroll">
+        <table class="table-auto w-full text-left">
+          <thead class="min-w-full">
+            <tr>
+              <th scope="col" class="px-6 py-4">Original Link</th>
+              <th  scope="col" class="px-6 py-4">Short Link</th>
+              <th  scope="col" class="px-8 py-4">Qr Code</th>
+              <th  scope="col" class="px-6 py-4">Clicks</th>
+              <th  scope="col" class="px-6 py-4">Status</th>
+              <th  scope="col" class="px-6 py-4">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="whitespace-nowrap px-6 py-4">
+                <a href="https://www.google.com">https://www.google.com</a>
+              </td>
+              <td class="whitespace-nowrap px-6 py-4">
+                <a href="https://www.google.com">https://link/ppp</a>
+              </td>
+              <td class="px-9 py-4">
+                <img class="w-8 h-7 block" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://link/ppp" alt="QR Code">
+              </td>
+              <td class="whitespace-nowrap px-6 py-4">0</td>
+              <td class="whitespace-nowrap px-6 py-4">Active</td>
+              <td class="whitespace-nowrap px-6 py-4">Oct-09-09</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
     </section>
   </main>
 </template>
