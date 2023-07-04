@@ -11,8 +11,12 @@ import PageLayout from '@/layout/PageLayout.vue'
 
         <nav class="col-start-5 justify-self-end dark:text-primary-pink">
           <ul class="flex items-center gap-2">
-            <li>login</li>
-            <li>Sign up</li>
+            <li>
+              <router-link to="/login" class="text-primary-blue">Login</router-link>
+            </li>
+            <li>
+              <router-link to="/signup" class="text-primary-blue">Sign up</router-link>
+            </li>
           </ul>
         </nav>
       </header>
@@ -20,7 +24,7 @@ import PageLayout from '@/layout/PageLayout.vue'
     <template #main>
       <main class="px-2">
         <div class="text-center max-w-2xl mx-auto mb-6">
-          <h2 class="font-bold  text-4xl mb-4">Shorten Your Loooong Links :)</h2>
+          <h2 class="font-bold text-4xl mb-4">Shorten Your Loooong Links :)</h2>
           <p class="mb-8">
             Linkly is an efficient and easy-to-use URL shortening service that streamlines your
             online experience.
