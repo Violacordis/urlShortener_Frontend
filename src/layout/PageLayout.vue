@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useDark, useToggle } from '@vueuse/core'
-
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
 
 const darkMode = ref(false)
 
@@ -29,7 +25,7 @@ const toggleDarkMode = () => {
     <slot name="header"></slot>
     <div class="">
       <slot name="main"></slot>
-      <button @click="toggleDarkMode">Click me</button>
+      <button @click="toggleDarkMode" class="cursor-pointer dark:text-white text-black">Click me</button>
     </div>
   </div>
 </template>
