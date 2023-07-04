@@ -139,8 +139,8 @@ import PageLayout from '@/layout/PageLayout.vue'
                   <td
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
-                    <img src="/images/arrow-right.svg" alt="a hand pointing" />
-                    <img src="/images/arrow-right (1).svg" alt="a hand pointing" />
+                    <img src="./images/arrow-right.svg" alt="a hand pointing" />
+                    <img src="./images/arrow-delete.svg" alt="a hand pointing" />
                   </td>
                 </tr>
               </tbody>
