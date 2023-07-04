@@ -24,8 +24,8 @@ import PageLayout from '@/layout/PageLayout.vue'
     <template #main>
       <main class="px-2">
         <div class="text-center max-w-2xl mx-auto mb-6">
-          <h2 class="font-bold text-4xl mb-4">Shorten Your Loooong Links :)</h2>
-          <p class="mb-8">
+          <h2 class="font-bold text-4xl mb-4 dark:text-primary-pink">Shorten Your Loooong Links :)</h2>
+          <p class="mb-8 dark:text-primary-lite">
             Linkly is an efficient and easy-to-use URL shortening service that streamlines your
             online experience.
           </p>
