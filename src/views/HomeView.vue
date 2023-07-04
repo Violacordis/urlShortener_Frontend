@@ -36,12 +36,12 @@
         <table class="table-auto w-full text-left">
           <thead class="min-w-full">
             <tr>
-              <th scope="col" class="px-6 py-4">Original Link</th>
-              <th  scope="col" class="px-6 py-4">Short Link</th>
-              <th  scope="col" class="px-8 py-4">Qr Code</th>
-              <th  scope="col" class="px-6 py-4">Clicks</th>
-              <th  scope="col" class="px-6 py-4">Status</th>
-              <th  scope="col" class="px-6 py-4">Date</th>
+              <th scope="col" class="px-6 py-4 whitespace-nowrap">Original Link</th>
+              <th  scope="col" class="px-6 py-4 whitespace-nowrap">Short Link</th>
+              <th  scope="col" class="px-6 py-4 whitespace-nowrap">QR Code</th>
+              <th  scope="col" class="px-6 py-4 whitespace-nowrap">Clicks</th>
+              <th  scope="col" class="px-6 py-4 whitespace-nowrap">Status</th>
+              <th  scope="col" class="px-6 py-4 whitespace-nowrap">Date</th>
             </tr>
           </thead>
           <tbody>
@@ -52,8 +52,8 @@
               <td class="whitespace-nowrap px-6 py-4">
                 <a href="https://www.google.com">https://link/ppp</a>
               </td>
-              <td class="px-9 py-4">
-                <img class="w-8 h-7 block" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://link/ppp" alt="QR Code">
+              <td class="px-6 py-4 whitespace-nowrap">
+                <img class="w-8 mx-auto" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://link/ppp" alt="QR Code">
               </td>
               <td class="whitespace-nowrap px-6 py-4">0</td>
               <td class="whitespace-nowrap px-6 py-4">Active</td>
@@ -63,6 +63,7 @@
         </table>
 
       </div>
+      
     </section>
   </main>
 </template>
