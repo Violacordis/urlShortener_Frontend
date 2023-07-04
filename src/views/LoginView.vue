@@ -7,7 +7,11 @@ import PageLayout from '@/layout/PageLayout.vue'
       <header
         class="grid grid-col-5 p-3 mb-4 md:py-4 shadow-2xl md:px-5 gap-1 items-center bg-slate-50 dark:bg-primary-black"
       >
-        <h1 class="dark:text-primary-blue">Logo</h1>
+        <h1 class="dark:text-primary-blue font-bold">
+          <router-link to="/">
+          Logo
+        </router-link>
+        </h1>
       </header>
     </template>
     <template #main>

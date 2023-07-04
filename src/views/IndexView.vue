@@ -5,17 +5,20 @@ import PageLayout from '@/layout/PageLayout.vue'
   <PageLayout>
     <template #header>
       <header
-        class="grid grid-col-5 p-3 pb-8 md:py-8 md:px-5 gap-1 items-center bg-slate-50 dark:bg-primary-black"
+        class="grid grid-col-5 px-3 py-5 shadow-2xl  gap-1 items-center bg-slate-50 dark:bg-primary-black"
       >
-        <h1 class="dark:text-primary-blue">Logo</h1>
-
+           <h1 class="dark:text-primary-blue font-bold">
+          <router-link to="/">
+          Logo
+        </router-link>
+        </h1>
         <nav class="col-start-5 justify-self-end dark:text-primary-pink">
           <ul class="flex items-center gap-2">
-            <li>
-              <router-link to="/login" class="text-primary-blue">Login</router-link>
+            <li class="px-4 py-2 rounded-3xl bg-primary-grey border border-dark-border text-white">
+              <router-link to="/login" class="text-white">Login</router-link>
             </li>
-            <li>
-              <router-link to="/signup" class="text-primary-blue">Sign up</router-link>
+            <li class="px-4 py-2 rounded-3xl bg-primary-blue">
+              <router-link to="/signup" class="text-white">Register Now</router-link>
             </li>
           </ul>
         </nav>
@@ -30,7 +33,7 @@ import PageLayout from '@/layout/PageLayout.vue'
             online experience.
           </p>
           <form
-            class="border-2 border-current rounded-3xl bg-slate-50 dark:bg-primary-grey dark:border-dark-border dark:text-primary-lite"
+            class="border-2 p-1 border-current rounded-3xl bg-slate-50 dark:bg-primary-grey dark:border-dark-border dark:text-primary-lite"
           >
             <input
               type="url"
