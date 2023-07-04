@@ -70,7 +70,7 @@ import PageLayout from '@/layout/PageLayout.vue'
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
                     <a href="https://www.google.com">https://link/ppp</a>
-                    <img src="/images/copy.svg" alt="copy" />
+                    <img src="./images/copy.svg" alt="copy" />
                   </td>
                   <td class="pr-9 py-4 pl-4 whitespace-nowrap">
                     <img
@@ -87,7 +87,7 @@ import PageLayout from '@/layout/PageLayout.vue'
                     <div
                       class="bg-lite-green p-2 rounded-full w-8 h-8 flex brightness-50 dark:brightness-110"
                     >
-                      <img src="/images/link.svg" alt="linkg" class="" />
+                      <img src="./images/link.svg" alt="linkg" class="" />
                     </div>
                   </td>
                   <td class="whitespace-nowrap pr-9 py-4 pl-4">Oct-09-09</td>
@@ -100,7 +100,7 @@ import PageLayout from '@/layout/PageLayout.vue'
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
                     <a href="https://www.google.com">https://link/ppp</a>
-                    <img src="/images/copy.svg" alt="copy" />
+                    <img src="./images/copy.svg" alt="copy" />
                   </td>
                   <td class="pr-9 py-4 pl-4 whitespace-nowrap">
                     <img
@@ -115,7 +115,7 @@ import PageLayout from '@/layout/PageLayout.vue'
                   >
                     Inactive
                     <div class="bg-lite-brown p-2 rounded-full w-8 h-8 flex">
-                      <img src="/images/unlink.svg" alt="linkg" />
+                      <img src="./images/unlink.svg" alt="linkg" />
                     </div>
                   </td>
                   <td class="whitespace-nowrap pr-9 py-4 pl-4">Oct-09-09</td>
