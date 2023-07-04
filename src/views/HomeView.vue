@@ -36,16 +36,16 @@ import PageLayout from '@/layout/PageLayout.vue'
           class="flex flex-wrap md:justify-center items-center gap-8 py-4 px-5 bg-slate-400 dark:bg-primary-grey dark:text-white"
         >
           <li class="flex items-center gap-1">
-            <img src="./images/clock.svg" alt="clock" /> History
+            <img src="/images/clock.svg" alt="clock" /> History
           </li>
           <li class="flex items-center gap-1">
-            <img src="./images/chart-simple.svg" alt="chart" /> Statistics
+            <img src="/images/chart-simple.svg" alt="chart" /> Statistics
           </li>
           <li class="flex items-center gap-1 whitespace-nowrap">
-            <img src="./images/hand-pointer.svg" alt="a hand pointing" /> <span>Click Steam</span>
+            <img src="/images/hand-pointer.svg" alt="a hand pointing" /> <span>Click Steam</span>
           </li>
           <li class="flex items-center gap-1">
-            <img src="./images/cog.svg" alt="clock" /> Settings
+            <img src="/images/cog.svg" alt="clock" /> Settings
           </li>
         </ul>
 
@@ -54,10 +54,10 @@ import PageLayout from '@/layout/PageLayout.vue'
             <h2>History(143)</h2>
             <div class="flex items-center gap-2">
               <p class="flex items-center gap-2 border p-2 rounded-3xl font-medium cursor-pointer">
-                <img src="./images/list-check.svg" alt="list check" />Bulk Edit
+                <img src="/images/list-check.svg" alt="list check" />Bulk Edit
               </p>
               <p class="flex items-center gap-2  border p-2 rounded-3xl font-medium cursor-pointer">
-                <img src="./images/filter.svg" alt="filter" />Filter
+                <img src="/images/filter.svg" alt="filter" />Filter
               </p>
             </div>
           </div>
@@ -83,7 +83,7 @@ import PageLayout from '@/layout/PageLayout.vue'
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
                     <a href="https://www.google.com">https://link/ppp</a>
-                    <img src="./images/copy.svg" alt="copy" />
+                    <img src="/images/copy.svg" alt="copy" />
                   </td>
                   <td class="pr-9 py-4 pl-4 whitespace-nowrap">
                     <img
@@ -98,15 +98,15 @@ import PageLayout from '@/layout/PageLayout.vue'
                   >
                     Active
                     <div class="bg-lite-green p-2 rounded-full w-8 h-8 flex brightness-50 dark:brightness-110">
-                      <img src="./images/link.svg" alt="linkg" class="" />
+                      <img src="/images/link.svg" alt="linkg" class="" />
                     </div>
                   </td>
                   <td class="whitespace-nowrap pr-9 py-4 pl-4">Oct-09-09</td>
                   <td
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
-                    <img src="./images/arrow-right.svg" alt="a hand pointing" />
-                    <img src="./images/arrow-delete.svg" alt="a hand pointing" />
+                    <img src="/images/arrow-right.svg" alt="a hand pointing" />
+                    <img src="/images/arrow-delete.svg" alt="a hand pointing" />
                   </td>
                 </tr>
                 <tr class="bg-gray-200 dark:bg-lite-blue dark:backdrop-blur-2xl">
@@ -117,7 +117,7 @@ import PageLayout from '@/layout/PageLayout.vue'
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
                     <a href="https://www.google.com">https://link/ppp</a>
-                    <img src="./images/copy.svg" alt="copy" />
+                    <img src="/images/copy.svg" alt="copy" />
                   </td>
                   <td class="pr-9 py-4 pl-4 whitespace-nowrap">
                     <img
@@ -132,15 +132,15 @@ import PageLayout from '@/layout/PageLayout.vue'
                   >
                     Inactive
                     <div class="bg-lite-brown p-2 rounded-full w-8 h-8 flex">
-                      <img src="./images/unlink.svg" alt="linkg" />
+                      <img src="/images/unlink.svg" alt="linkg" />
                     </div>
                   </td>
                   <td class="whitespace-nowrap pr-9 py-4 pl-4">Oct-09-09</td>
                   <td
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
-                    <img src="./images/arrow-right.svg" alt="a hand pointing" />
-                    <img src="./images/arrow-delete.svg" alt="a hand pointing" />
+                    <img src="/images/arrow-right.svg" alt="a hand pointing" />
+                    <img src="/images/arrow-delete.svg" alt="a hand pointing" />
                   </td>
                 </tr>
               </tbody>
