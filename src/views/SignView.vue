@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import PageLayout from '@/layout/PageLayout.vue'
-import router from '@/router'
+import { useRouter } from 'vue-router';
 // signup function
 
 import { ref } from 'vue'
@@ -11,44 +11,40 @@ const username = ref('')
 const error = ref('')
 const success = ref(false)
 const loading = ref(false)
-
+const router = useRouter()
 const signup = async (e: Event) => {
   e.preventDefault()
-  error.value = ''
-  loading.value = true
-
-  if (email.value === '' || password.value === '' || username.value === '') {
+  if(!email.value || !password.value || !username.value) {
     error.value = 'Please fill all the fields'
+    return
+  }else{
+const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: email.value,
+      password: password.value,
+      userName: username.value
+    })
+  })
+  const data = await res.json()
+  if (!res.ok) {
+    error.value = 'Invalid credentials'
+    console.log(data)
     loading.value = false
     return
   } else {
-    //  send data to server
-    const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email: email.value,
-        password: password.value,
-        userName: username.value
-      })
-    })
-    if (res.status !== 200) {
-      error.value = 'Something went wrong'
-      loading.value = false
-      return
-    } else {
-      const data = await res.json()
-      success.value = true
-      loading.value = false
-      //   save user id in cookies or localstorage
-      localStorage.setItem('userId', data.id)
-      router.push('/verify')
-    }
+    success.value = true
+    loading.value = false
+    localStorage.setItem('userId', data.data.id)
+    router.push('/verify')
   }
+    
+  }
+  
 }
-console.log(loading.value)
 </script>
 <template>
   <PageLayout>
