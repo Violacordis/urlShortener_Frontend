@@ -54,7 +54,7 @@ const signup = async (e: Event) => {
         token: username.value
       })
     })
-    if (res.status !== 200) {
+    if (!res.ok) {
       error.value = 'Invalid OTP'
       loading.value = false
       return
@@ -64,9 +64,9 @@ const signup = async (e: Event) => {
       success.value = true
       loading.value = false
       error.value = ''
-      //   remove user id in cookies or localstorage
+      username.value = ''
       localStorage.removeItem('userId')
-      router.push('/login')
+      router.push('/login')     
     }
   }
 }

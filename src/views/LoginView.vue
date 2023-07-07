@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import PageLayout from '@/layout/PageLayout.vue'
-import router from '@/router'
+import { useRouter } from 'vue-router';
 import { ref } from 'vue'
 
 const email = ref('')
@@ -8,8 +8,10 @@ const password = ref('')
 const error = ref('')
 const success = ref(false)
 const loading = ref(false)
+const router = useRouter()
 
-const login = async() =>{
+const login = async(e:Event) =>{
+  e.preventDefault()
 if(email.value === '' || password.value === ''){
   error.value = 'Please fill all the fields'
   return
@@ -25,13 +27,15 @@ if(email.value === '' || password.value === ''){
       password: password.value
     })
   })
-  if (res.status !== 200) {
+    const data = await res.json()
+  if (!res.ok) {
     error.value = 'Invalid credentials'
     return
   } else {
     success.value = true
     loading.value = false
-    router.push('/home')
+    localStorage.setItem('user',JSON.stringify(data.data))
+    router.push('/link')
   }
 }
 
@@ -58,13 +62,13 @@ if(email.value === '' || password.value === ''){
         <!-- login form -->
        
           <form 
-          @submit.prevent="login"
+          @submit="login"
           class="bg-slate-300 w-full px-3 py-6 rounded-xl dark:bg-gray-800 shadow max-w-xl mx-auto">
             <p class="text-center text-2xl mb-10 font-medium dark:text-primary-lite">Login to your account</p>
             <input
               type="text"
               v-model="email"
-              placeholder="Username"
+              placeholder="Enter your email"
               class="block w-full mb-4 rounded-xl outline-none py-3 px-4 bg-slate-50 dark:bg-primary-grey dark:text-primary-lite"
             />
             <input
