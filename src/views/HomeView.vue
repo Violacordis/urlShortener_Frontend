@@ -50,6 +50,20 @@ if (currentTime - loginTime > 86400000) {
   logout()
 }
 
+// control url active state
+const controlUrlState = async (id: string, isActive: boolean) => {
+let url= isActive? `https://shortify-rg0z.onrender.com/api/v1/url/${id}/deactivate`: `https://shortify-rg0z.onrender.com/api/v1/url/${id}/activate`
+  const res = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if (res.ok) {
+    getUserUrls()
+  }
+}
+
 const copyToClipboard = (e: Event) => {
   const el = e.target as HTMLInputElement
   el.select()
@@ -116,7 +130,7 @@ const shortenUrl = async (e: Event) => {
   }
 }
 </script>
-<template v-if="user">
+<template>
   <PageLayout>
     <template #header>
       <header
@@ -236,7 +250,9 @@ const shortenUrl = async (e: Event) => {
                       :href="'https://shortify-rg0z.onrender.com/' + userUrl.shortUrl"
                       >{{ userUrl.shortUrl }}</a
                     >
-                    <img src="/images/copy.svg" alt="copy" />
+                    <button @click="copyToClipboard" class="cursor-pointer">
+                      <img src="/images/copy.svg" alt="copy" />
+                    </button>
                   </td>
                   <td class="pr-9 py-4 pl-4 whitespace-nowrap">
                     <img
@@ -254,6 +270,7 @@ const shortenUrl = async (e: Event) => {
                     <div
                       class="p-2 rounded-full w-8 h-8 flex brightness-50 dark:brightness-110"
                       :class="userUrl.isActive ? 'bg-lite-green' : 'bg-lite-brown'"
+                      @click="controlUrlState(userUrl.id, userUrl.isActive)"
                     >
                       <img
                         :src="userUrl.isActive ? '/images/link.svg' : '/images/unlink.svg'"
