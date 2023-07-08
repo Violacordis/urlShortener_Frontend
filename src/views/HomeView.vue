@@ -1,5 +1,99 @@
 <script setup lang="ts">
 import PageLayout from '@/layout/PageLayout.vue'
+import { onMounted, ref } from 'vue'
+
+const url = ref('')
+const shortUrl = ref('')
+const title = ref('')
+interface Url {
+  id: string
+  longUrl: string
+  shortUrl: string
+  title: string
+  clicks: string
+  createdAt: string
+  updatedAt: string
+}
+const userUrls = ref([] as Url[] )
+ 
+const user = JSON.parse(localStorage.getItem('user') || '{}')
+const token = user.access_token
+const getUserUrls = async() =>{
+  const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/url/all',{
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  const data = await res.json()
+  userUrls.value = data.data
+  console.log(userUrls.value)
+}
+
+onMounted(() =>{
+  getUserUrls()
+})
+console.log(userUrls.value)
+const copyToClipboard = (e:Event) =>{
+  const el = e.target as HTMLInputElement
+  el.select()
+  document.execCommand('copy')
+}
+
+const deleteUrl = async(id:string) =>{
+  const res = await fetch(`https://shortify-rg0z.onrender.com/api/v1/links/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if(res.ok){
+    getUserUrls()
+  }
+}
+
+const editUrl = async(id:string) =>{
+  const res = await fetch(`https://shortify-rg0z.onrender.com/api/v1/links/${id}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if(res.ok){
+    getUserUrls()
+  }
+}
+
+
+
+const shortenUrl = async(e:Event) =>{
+  e.preventDefault()
+  if(url.value === ''){
+    return
+  }else{
+    //  send data to server
+    const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/url/create-shortUrl', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        longUrl: url.value,
+        title: title.value
+      })
+    })
+      const data = await res.json()
+    if (!res.ok) {
+      return
+    } else {
+      shortUrl.value = data.data.shortUrl
+      url.value = ''
+      console.log(data,shortUrl.value)
+    }
+  }
+
+}
+
 </script>
 <template>
   <PageLayout>
@@ -9,11 +103,19 @@ import PageLayout from '@/layout/PageLayout.vue'
       >
         <h1 class="dark:text-primary-blue">Logo</h1>
         <form
+        @submit="shortenUrl"
           class="mt-2 row-start-2 col-span-5 border-2 border-current rounded-3xl md:col-start-2 p-1 md:col-span-3 md:row-start-1 md:mt-0 bg-slate-50 dark:bg-primary-grey dark:border-dark-border dark:text-primary-lite"
         >
           <input
             type="url"
+            v-model="url"
             placeholder="Enter the link here"
+            class="rounded-3xl outline-none w-8/12 p-2 bg-slate-50 dark:bg-primary-grey"
+          />
+            <input
+            type="text"
+            v-model="title"
+            placeholder="Enter the title here"
             class="rounded-3xl outline-none w-8/12 p-2 bg-slate-50 dark:bg-primary-grey"
           />
           <input
