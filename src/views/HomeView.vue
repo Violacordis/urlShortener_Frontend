@@ -95,7 +95,7 @@ const deleteUrl = async (id: string) => {
 const editUrl = async (id: string, data: Url) => {
   showForm.value = true
   url.value = data
-}
+ }
 
 const shortenUrl = async (e: Event) => {
   e.preventDefault()
@@ -154,6 +154,20 @@ const shortenUrl = async (e: Event) => {
     }
   }
 }
+const closeForm = () => {
+  showForm.value = false
+  url.value = {
+    longUrl: '',
+    shortUrl: '',
+    customUrl: '',
+    title: '',
+    clicks: '',
+    createdAt: '',
+    updatedAt: '',
+    isActive: false,
+    id: ''
+  }
+}
 </script>
 <template>
   <PageLayout>
@@ -188,7 +202,7 @@ const shortenUrl = async (e: Event) => {
           >
             <div class="flex justify-between mb-4">
               <p>Create</p>
-              <button @click="showForm = !showForm">close</button>
+              <button @click="closeForm">close</button>
             </div>
             <input
               type="text"
@@ -198,7 +212,7 @@ const shortenUrl = async (e: Event) => {
             />
             <input
               type="url"
-              v-model="url"
+              v-model="url.longUrl"
               placeholder="Enter the link here"
               class="rounded-3xl mb-4 w-full p-2 bg-slate-50 dark:bg-primary-grey"
             />
