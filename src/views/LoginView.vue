@@ -35,6 +35,8 @@ if(email.value === '' || password.value === ''){
     success.value = true
     loading.value = false
     localStorage.setItem('user',JSON.stringify(data.data))
+    // save time of login
+    localStorage.setItem('loginTime', new Date().getTime().toString())
     router.push('/link')
   }
 }
