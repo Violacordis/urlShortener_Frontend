@@ -3,16 +3,27 @@ import PageLayout from '@/layout/PageLayout.vue'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const url = ref('')
-const shortUrl = ref('')
-const title = ref('')
-const customUrl = ref('')
 const showForm = ref(false)
+const url = ref({
+  longUrl: '',
+  shortUrl: '',
+  customUrl: '',
+  title: '',
+  clicks: '',
+  createdAt: '',
+  updatedAt: '',
+  isActive: false,
+  id: ''
+})
+const userUrls = ref([] as Url[])
+const user = JSON.parse(localStorage.getItem('user') || '{}')
+const token = user.access_token
 
 interface Url {
   id: string
   longUrl: string
   shortUrl: string
+  customUrl: string
   title: string
   clicks: string
   createdAt: string
@@ -20,9 +31,6 @@ interface Url {
   isActive: boolean
 }
 
-const userUrls = ref([] as Url[])
-const user = JSON.parse(localStorage.getItem('user') || '{}')
-const token = user.access_token
 const getUserUrls = async () => {
   const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/url/all', {
     headers: {
@@ -52,7 +60,9 @@ if (currentTime - loginTime > 86400000) {
 
 // control url active state
 const controlUrlState = async (id: string, isActive: boolean) => {
-let url= isActive? `https://shortify-rg0z.onrender.com/api/v1/url/${id}/deactivate`: `https://shortify-rg0z.onrender.com/api/v1/url/${id}/activate`
+  let url = isActive
+    ? `https://shortify-rg0z.onrender.com/api/v1/url/${id}/deactivate`
+    : `https://shortify-rg0z.onrender.com/api/v1/url/${id}/activate`
   const res = await fetch(url, {
     method: 'PATCH',
     headers: {
@@ -71,7 +81,7 @@ const copyToClipboard = (e: Event) => {
 }
 
 const deleteUrl = async (id: string) => {
-  const res = await fetch(`https://shortify-rg0z.onrender.com/api/v1/links/${id}`, {
+  const res = await fetch(`https://shortify-rg0z.onrender.com/api/v1/url/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`
@@ -82,50 +92,65 @@ const deleteUrl = async (id: string) => {
   }
 }
 
-const editUrl = async (id: string) => {
-  const res = await fetch(`https://shortify-rg0z.onrender.com/api/v1/links/${id}`, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-  if (res.ok) {
-    getUserUrls()
-  }
+const editUrl = async (id: string, data: Url) => {
+  showForm.value = true
+  url.value = data
 }
 
 const shortenUrl = async (e: Event) => {
   e.preventDefault()
-  if (url.value === '') {
+  if (url.value.longUrl === '') {
     return
   } else {
-    //  send data to server
-    // if custom is empty change remove it from the body
-    const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/url/create-shortUrl', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body:
-        customUrl.value !== ''
-          ? JSON.stringify({
-              longUrl: url.value,
-              title: title.value,
-              customName: customUrl.value
-            })
-          : JSON.stringify({
-              longUrl: url.value,
-              title: title.value
-            })
-    })
-    const data = await res.json()
-    if (!res.ok) {
-      return
+    const body =
+      url.value.customUrl !== ''
+        ? JSON.stringify({
+            longUrl: url.value.longUrl,
+            title: url.value.title,
+            customName: url.value.customUrl
+          })
+        : JSON.stringify({
+            longUrl: url.value.longUrl,
+            title: url.value.title
+          })
+
+    if (url.value.id === '') {
+      const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/url/create-shortUrl', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body:body
+      })
+      if (!res.ok) {
+        return
+      } else {
+        showForm.value = false
+      }
     } else {
-      shortUrl.value = data.data.shortUrl
-      url.value = ''
-      showForm.value = false
+      const res = await fetch(`https://shortify-rg0z.onrender.com/api/v1/url/${url.value.id}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body : body
+      })
+      if (res.ok) {
+        getUserUrls()
+      }
+    }
+    showForm.value = false
+    url.value = {
+      longUrl: '',
+      shortUrl: '',
+      customUrl: '',
+      title: '',
+      clicks: '',
+      createdAt: '',
+      updatedAt: '',
+      isActive: false,
+      id: ''
     }
   }
 }
@@ -153,23 +178,6 @@ const shortenUrl = async (e: Event) => {
     </template>
     <template #main>
       <main>
-        <!-- <ul
-          class="flex flex-wrap md:justify-center items-center gap-8 py-4 px-5 bg-slate-400 dark:bg-primary-grey dark:text-white"
-        >
-          <li class="flex items-center gap-1">
-            <img src="/images/clock.svg" alt="clock" /> History
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="/images/chart-simple.svg" alt="chart" /> Statistics
-          </li>
-          <li class="flex items-center gap-1 whitespace-nowrap">
-            <img src="/images/hand-pointer.svg" alt="a hand pointing" /> <span>Click Steam</span>
-          </li>
-          <li class="flex items-center gap-1">
-            <img src="/images/cog.svg" alt="clock" /> Settings
-          </li>
-        </ul> -->
-
         <div
           v-if="showForm"
           class="fixed top-0 z-50 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center"
@@ -184,7 +192,7 @@ const shortenUrl = async (e: Event) => {
             </div>
             <input
               type="text"
-              v-model="title"
+              v-model="url.title"
               placeholder="Enter the title here"
               class="rounded-3xl mb-4 w-full p-2 bg-slate-50 dark:bg-primary-grey"
             />
@@ -196,7 +204,7 @@ const shortenUrl = async (e: Event) => {
             />
             <input
               type="text"
-              v-model="customUrl"
+              v-model="url.customUrl"
               placeholder="Customize your link here (optional)"
               class="rounded-3xl mb-4 w-full p-2 bg-slate-50 dark:bg-primary-grey"
             />
@@ -209,17 +217,6 @@ const shortenUrl = async (e: Event) => {
         </div>
 
         <section class="max-w-5xl mx-auto">
-          <!-- <div class="flex items-center justify-between dark:text-primary-lite px-6 my-8">
-            <h2>History(143)</h2>
-            <div class="flex items-center gap-2">
-              <p class="flex items-center gap-2 border p-2 rounded-3xl font-medium cursor-pointer">
-                <img src="/images/list-check.svg" alt="list check" />Bulk Edit
-              </p>
-              <p class="flex items-center gap-2  border p-2 rounded-3xl font-medium cursor-pointer">
-                <img src="/images/filter.svg" alt="filter" />Filter
-              </p>
-            </div>
-          </div> -->
           <div class="overflow-x-auto pb-2">
             <table class="table-auto w-full text-left border-separate border-spacing-y-3">
               <thead class="min-w-full border-collapse border-spacing-y-0">
@@ -250,7 +247,7 @@ const shortenUrl = async (e: Event) => {
                       :href="'https://shortify-rg0z.onrender.com/' + userUrl.shortUrl"
                       >{{ userUrl.shortUrl }}</a
                     >
-                    <button @click="copyToClipboard" class="cursor-pointer">
+                    <button @click="copyToClipboard" class="cursor-pointer w-6 h-6">
                       <img src="/images/copy.svg" alt="copy" />
                     </button>
                   </td>
@@ -266,7 +263,7 @@ const shortenUrl = async (e: Event) => {
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2"
                     :class="userUrl.isActive ? 'text-green-acc' : 'text-brown-acc'"
                   >
-                    {{ userUrl.isActive ? 'Active' : 'Inactive' }}
+                    {{ userUrl.isActive ? 'Active' : 'InActive' }}
                     <div
                       class="p-2 rounded-full w-8 h-8 flex brightness-50 dark:brightness-110"
                       :class="userUrl.isActive ? 'bg-lite-green' : 'bg-lite-brown'"
@@ -283,8 +280,12 @@ const shortenUrl = async (e: Event) => {
                   <td
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
-                    <img src="/images/arrow-right.svg" alt="a hand pointing" />
-                    <img src="/images/arrow-delete.svg" alt="a hand pointing" />
+                    <button @click="editUrl(userUrl.id, userUrl)">
+                      <img src="/images/arrow-right.svg" alt="edit" />
+                    </button>
+                    <button @click="deleteUrl(userUrl.id)">
+                      <img src="/images/arrow-delete.svg" alt="delete" />
+                    </button>
                   </td>
                 </tr>
               </tbody>
