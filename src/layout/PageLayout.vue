@@ -4,19 +4,12 @@ import { ref } from 'vue'
 const darkMode = ref(false)
 
 const toggleDarkMode = () => {
-  //check if dark mode is true or false
   if (darkMode.value) {
     darkMode.value = false
-    //remove dark mode in html
     document?.querySelector('html')?.classList.remove('dark')
-
-    console.log('dark mode is false')
   } else {
-    //if false, set dark mode to true
     darkMode.value = true
-    //add dark mode in html
     document?.querySelector('html')?.classList.add('dark')
-    console.log('dark mode is true')
   }
 }
 </script>
@@ -25,7 +18,7 @@ const toggleDarkMode = () => {
     <slot name="header"></slot>
     <div>
       <!-- make a toggle button for color theme -->
-      <label class="cursor-pointer flex justify-end my-3 mr-2">
+      <label class="cursor-pointer flex my-3 ml-auto max-w-max">
         <div class="relative inline-flex items-center cursor-pointer">
           <input type="checkbox" value="" class="sr-only peer" @click="toggleDarkMode" />
           <div
