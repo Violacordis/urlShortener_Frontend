@@ -212,12 +212,12 @@ const shortenUrl = async (e: Event) => {
                   class="bg-gray-200 dark:bg-lite-blue dark:backdrop-blur-2xl"
                 >
                   <td class="pr-9 py-4 pl-4">
-                    <a href="https://www.google.com">{{ userUrl.longUrl }}</a>
+                    <a :href="userUrl.longUrl" target="_blank">{{ userUrl.longUrl }}</a>
                   </td>
                   <td
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
-                    <a href="https://www.google.com">{{ userUrl.shortUrl }}</a>
+                    <a  target="_blank" :href="'https://shortify-rg0z.onrender.com/'+ userUrl.shortUrl ">{{ userUrl.shortUrl }}</a>
                     <img src="/images/copy.svg" alt="copy" />
                   </td>
                   <td class="pr-9 py-4 pl-4 whitespace-nowrap">
