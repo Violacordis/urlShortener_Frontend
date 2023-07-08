@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PageLayout from '@/layout/PageLayout.vue'
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const url = ref('')
 const shortUrl = ref('')
@@ -31,10 +32,23 @@ const getUserUrls = async () => {
   const data = await res.json()
   userUrls.value = data.data
 }
+const router = useRouter()
 
 onMounted(() => {
   getUserUrls()
 })
+
+const logout = () => {
+  localStorage.clear()
+  router.push({ name: 'login' })
+}
+
+// check if time of login is greater than 24hrs than logout user
+const loginTime = JSON.parse(localStorage.getItem('loginTime') || '')
+const currentTime = new Date().getTime()
+if (currentTime - loginTime > 86400000) {
+  logout()
+}
 
 const copyToClipboard = (e: Event) => {
   const el = e.target as HTMLInputElement
@@ -102,7 +116,7 @@ const shortenUrl = async (e: Event) => {
   }
 }
 </script>
-<template>
+<template v-if="user">
   <PageLayout>
     <template #header>
       <header
@@ -118,7 +132,7 @@ const shortenUrl = async (e: Event) => {
         <nav class="col-start-5 row-span-1 justify-self-end dark:text-primary-pink">
           <ul class="flex items-center gap-2">
             <li>user</li>
-            <li>logout</li>
+            <li @click="logout">logout</li>
           </ul>
         </nav>
       </header>
@@ -217,7 +231,11 @@ const shortenUrl = async (e: Event) => {
                   <td
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
-                    <a  target="_blank" :href="'https://shortify-rg0z.onrender.com/'+ userUrl.shortUrl ">{{ userUrl.shortUrl }}</a>
+                    <a
+                      target="_blank"
+                      :href="'https://shortify-rg0z.onrender.com/' + userUrl.shortUrl"
+                      >{{ userUrl.shortUrl }}</a
+                    >
                     <img src="/images/copy.svg" alt="copy" />
                   </td>
                   <td class="pr-9 py-4 pl-4 whitespace-nowrap">
