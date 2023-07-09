@@ -29,6 +29,7 @@ interface Url {
   createdAt: string
   updatedAt: string
   isActive: boolean
+  qrcode: {image: string}
 }
 
 const getUserUrls = async () => {
@@ -95,7 +96,7 @@ const deleteUrl = async (id: string) => {
 const editUrl = async (id: string, data: Url) => {
   showForm.value = true
   url.value = data
- }
+}
 
 const shortenUrl = async (e: Event) => {
   e.preventDefault()
@@ -121,7 +122,7 @@ const shortenUrl = async (e: Event) => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
         },
-        body:body
+        body: body
       })
       if (!res.ok) {
         return
@@ -134,7 +135,7 @@ const shortenUrl = async (e: Event) => {
         headers: {
           Authorization: `Bearer ${token}`
         },
-        body : body
+        body: body
       })
       if (res.ok) {
         getUserUrls()
@@ -152,6 +153,30 @@ const shortenUrl = async (e: Event) => {
       isActive: false,
       id: ''
     }
+  }
+}
+const addQrCode = async (id: string) => {
+  const url = `https://shortify-rg0z.onrender.com/api/v1/url/${id}/qrcode`
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if (res.ok) {
+    getUserUrls()
+  }
+}
+const deleteQrCode = async (id: string) => {
+  const url = `https://shortify-rg0z.onrender.com/api/v1/url/${id}/qrcode`
+  const res = await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
+  if (res.ok) {
+    getUserUrls()
   }
 }
 const closeForm = () => {
@@ -257,8 +282,15 @@ const closeForm = () => {
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
                     <a
-                      target="_blank"
-                      :href="'https://shortify-rg0z.onrender.com/' + userUrl.shortUrl"
+                      :class="
+                        userUrl.isActive ? 'cursor-pointer' : ' text-slate-200 cursor-not-allowed'
+                      "
+                      :target="userUrl.isActive ? '_blank' : '_self'"
+                      :href="
+                        userUrl.isActive
+                          ? 'https://shortify-rg0z.onrender.com/' + userUrl.shortUrl
+                          : '#'
+                      "
                       >{{ userUrl.shortUrl }}</a
                     >
                     <button @click="copyToClipboard" class="cursor-pointer w-6 h-6">
@@ -266,11 +298,23 @@ const closeForm = () => {
                     </button>
                   </td>
                   <td class="pr-9 py-4 pl-4 whitespace-nowrap">
-                    <img
-                      class="w-8 mx-auto"
-                      src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://link/ppp"
-                      alt="QR Code"
-                    />
+                    <button
+                      v-if="userUrl.qrcode === null"
+                      @click="addQrCode(userUrl.id)"
+                      class="cursor-pointer w-6 h-6"
+                    >
+                      create
+                    </button>
+                    <div v-else class="flex items-center gap-4">
+                      <img class="w-8 mx-auto" :src="userUrl.qrcode.image" alt="QR Code" />
+                       <button
+                    
+                      @click="deleteQrCode(userUrl.id)"
+                      class="cursor-pointer w-6 h-6"
+                    >
+                     <img src="/images/arrow-delete.svg" alt="delete" />
+                    </button>
+                    </div>
                   </td>
                   <td class="whitespace-nowrap pr-9 py-4 pl-4">{{ userUrl.clicks }}</td>
                   <td
