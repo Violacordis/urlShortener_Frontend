@@ -29,7 +29,7 @@ interface Url {
   createdAt: string
   updatedAt: string
   isActive: boolean
-  qrcode: {image: string}
+  qrcode: { image: string }
 }
 
 const getUserUrls = async () => {
@@ -256,7 +256,7 @@ const closeForm = () => {
         </div>
 
         <section class="max-w-5xl mx-auto">
-          <div class="overflow-x-auto pb-2">
+          <div class="overflow-x-auto pb-2 ">
             <table class="table-auto w-full text-left border-separate border-spacing-y-3">
               <thead class="min-w-full border-collapse border-spacing-y-0">
                 <tr class="bg-gray-300 dark:bg-dark-hd dark:text-primary-lite border-spacing-y-0">
@@ -302,18 +302,19 @@ const closeForm = () => {
                       v-if="userUrl.qrcode === null"
                       @click="addQrCode(userUrl.id)"
                       class="cursor-pointer w-6 h-6"
+                      title="create qrcode"
                     >
-                      create
+                      <img src="/images/icons8-plus.svg" alt="add" />
                     </button>
                     <div v-else class="flex items-center gap-4">
                       <img class="w-8 mx-auto" :src="userUrl.qrcode.image" alt="QR Code" />
-                       <button
-                    
-                      @click="deleteQrCode(userUrl.id)"
-                      class="cursor-pointer w-6 h-6"
-                    >
-                     <img src="/images/arrow-delete.svg" alt="delete" />
-                    </button>
+                      <button
+                        title="delete qrcode"
+                        @click="deleteQrCode(userUrl.id)"
+                        class="cursor-pointer w-6 h-6 brightness-50 dark:brightness-110"
+                      >
+                        <img src="/images/arrow-delete.svg" alt="delete" />
+                      </button>
                     </div>
                   </td>
                   <td class="whitespace-nowrap pr-9 py-4 pl-4">{{ userUrl.clicks }}</td>
@@ -334,7 +335,7 @@ const closeForm = () => {
                       />
                     </div>
                   </td>
-                  <td class="whitespace-nowrap pr-9 py-4 pl-4">Oct-09-09</td>
+                  <td class="whitespace-nowrap pr-9 py-4 pl-4">{{ new Date(userUrl.createdAt).toLocaleDateString()  }}</td>
                   <td
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
