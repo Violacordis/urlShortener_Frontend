@@ -38,6 +38,13 @@ const router = createRouter({
       path: "/verify",
       name: "verify",
       component: () => import('../views/VerifyView.vue')
+    },{
+      path:"/user",
+      name:"user",
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import('../views/UserView.vue'),
     }
   ]
 })
