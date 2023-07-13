@@ -21,7 +21,8 @@ export const theme = {
     backgroundImage: {
       'dark-mobile': "url('/images/back-mobile.jpg')",
       'dark-desktop': "url('/images/back-desktop.jpg')",
-      'dark-tablet': "url('/images/back-tablet.jpg')"
+      'dark-tablet': "url('/images/back-tablet.jpg')",
+      'user-image': "url('/images/icons8-user.svg')",
     }
   }
 }
