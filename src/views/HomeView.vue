@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import UserComponent from '@/components/UserComponent.vue';
 import PageLayout from '@/layout/PageLayout.vue'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -16,8 +17,8 @@ const url = ref({
   id: ''
 })
 const userUrls = ref([] as Url[])
-const user = JSON.parse(localStorage.getItem('user') || '{}')
-const token = user.access_token
+const token = localStorage.getItem('token') || ''
+const showUserSettings = ref(false)
 
 interface Url {
   id: string
@@ -193,12 +194,17 @@ const closeForm = () => {
     id: ''
   }
 }
+const displayQrcodeinNewTab = (image:string) => {
+// display base64 qrcode in new tab
+  const win = window.open()
+  win?.document.write(`<img src="${image}" alt="QR Code" />`)
+}
 </script>
 <template>
   <PageLayout>
     <template #header>
       <header
-        class="flex p-3 pb-8 md:py-8 md:px-5 gap-2 items-center bg-slate-50 dark:bg-primary-black"
+        class="flex p-3 pb-8 md:py-8 md:px-5 gap-2 items-center shadow-lg bg-slate-50 dark:bg-primary-black"
       >
         <h1 class="dark:text-primary-blue">Logo</h1>
         <button
@@ -207,12 +213,15 @@ const closeForm = () => {
         >
           Create link
         </button>
-        <nav class="col-start-5 row-span-1 justify-self-end dark:text-primary-pink">
-          <ul class="flex items-center gap-2">
-            <li>user</li>
-            <li @click="logout">logout</li>
-          </ul>
-        </nav>
+        <!-- avatar image -->
+        <button
+          @click="showUserSettings = !showUserSettings"
+          class="w-9 h-9 rounded-full bg-no-repeat bg-user-image bg-center bg-cover cursor-pointer"
+        >
+          <span class="sr-only">Show user setting</span>
+        </button>
+        <!-- user settings -->
+       <UserComponent v-if="showUserSettings" />
       </header>
     </template>
     <template #main>
@@ -256,7 +265,7 @@ const closeForm = () => {
         </div>
 
         <section class="max-w-5xl mx-auto">
-          <div class="overflow-x-auto pb-2 ">
+          <div class="overflow-x-auto pb-2">
             <table class="table-auto w-full text-left border-separate border-spacing-y-3">
               <thead class="min-w-full border-collapse border-spacing-y-0">
                 <tr class="bg-gray-300 dark:bg-dark-hd dark:text-primary-lite border-spacing-y-0">
@@ -307,7 +316,12 @@ const closeForm = () => {
                       <img src="/images/icons8-plus.svg" alt="add" />
                     </button>
                     <div v-else class="flex items-center gap-4">
-                      <img class="w-8 mx-auto" :src="userUrl.qrcode.image" alt="QR Code" />
+                      <!-- There are ways to work around this issue, such as converting the Base64 data into a Blob object and using that to navigate to the data  -->
+                      
+   
+
+                         <img class="w-8 mx-auto" :src="userUrl.qrcode.image" alt="QR Code" @click="displayQrcodeinNewTab(userUrl?.qrcode?.image)"/>
+              
                       <button
                         title="delete qrcode"
                         @click="deleteQrCode(userUrl.id)"
@@ -335,7 +349,9 @@ const closeForm = () => {
                       />
                     </div>
                   </td>
-                  <td class="whitespace-nowrap pr-9 py-4 pl-4">{{ new Date(userUrl.createdAt).toLocaleDateString()  }}</td>
+                  <td class="whitespace-nowrap pr-9 py-4 pl-4">
+                    {{ new Date(userUrl.createdAt).toLocaleDateString() }}
+                  </td>
                   <td
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
