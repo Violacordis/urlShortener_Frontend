@@ -72,7 +72,7 @@ const forgotPassword = async (e: Event) => {
           />
           <input
             type="submit"
-            value="Sign up"
+            value="Submit"
             :disabled="loading"
             :class="
               loading
