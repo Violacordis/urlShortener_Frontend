@@ -50,11 +50,12 @@ const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/signup',
   <PageLayout>
     <template #header>
       <header
-        class="grid grid-col-5 p-3 mb-4 md:py-4 shadow-2xl md:px-5 gap-1 items-center bg-slate-50 dark:bg-primary-black"
+        class="flex justify-between p-3 mb-4 md:py-4 shadow-2xl md:px-5 gap-1 items-center bg-slate-50 dark:bg-primary-black"
       >
         <h1 class="dark:text-primary-blue font-bold">
           <router-link to="/"> Logo </router-link>
         </h1>
+         <router-link to="/verify" class="text-primary-blue font-bold">Verify email</router-link>
       </header>
     </template>
     <template #main>
@@ -99,10 +100,6 @@ const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/signup',
           <p class="text-center mb-4 dark:text-primary-lite">
             You already have an account?
             <router-link to="/login" class="text-primary-blue">Log in</router-link>
-          </p>
-          <p>
-            Verify your email
-            <router-link to="/verify" class="text-primary-blue">Verify now</router-link>
           </p>
         </form>
       </main>
