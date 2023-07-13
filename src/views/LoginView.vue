@@ -79,7 +79,7 @@ const login = async (e: Event) => {
             class="w-full mb-3 block rounded-xl outline-none px-4 py-3 bg-slate-50 dark:bg-primary-grey dark:text-primary-lite"
           />
           <p class="text-right mb-8">
-            <router-link to="/forgot-password" class="text-primary-blue"
+            <router-link to="/forgotpassword" class="text-primary-blue"
               >Forgot password?</router-link
             >
           </p>
