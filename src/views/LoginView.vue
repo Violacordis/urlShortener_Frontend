@@ -34,7 +34,8 @@ const login = async (e: Event) => {
       error.value = 'Invalid credentials'
       return
     } else {
-      localStorage.setItem('user', JSON.stringify(data.data))
+      localStorage.setItem('token', data.data.access_token)
+      localStorage.setItem('user', JSON.stringify(data.data.data.user))
       localStorage.setItem('loginTime', new Date().getTime().toString())
       success.value = true
       loading.value = false
