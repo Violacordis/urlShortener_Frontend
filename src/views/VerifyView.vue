@@ -15,6 +15,7 @@ let countDown = ref('10:00')
 const mins = ref(10)
 let sec = ref(60)
 
+
 const countDownTimer = setInterval(() => {
   if (mins.value >= 1) {
     sec.value--
@@ -59,49 +60,66 @@ const signup = async (e: Event) => {
       loading.value = false
       return
     } else {
-      const data = await res.json()
-      console.log(data)
       success.value = true
       loading.value = false
       error.value = ''
       username.value = ''
       localStorage.removeItem('userId')
-      router.push('/login')     
+      router.push('/login')
     }
   }
 }
-const resend = () => {
+const resend = (e: Event) => {
+  e.preventDefault()
   const id = localStorage.getItem('userId')
-  fetch('https://shortify-rg0z.onrender.com/api/v1/auth/new-token/' + id, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }).then((data) => {
-    // check if data responsr is email is verified or invalid
 
-    if (data.statusText === "It's either this email is already verified or invalid") {
-      error.value = 'Email already verified or invalid'
-      return
-    } else {
-      error.value = ''
-      countDown.value = '10:00'
-      mins.value = 10
-      sec.value = 60
-      otpResent.value = true
-    }
-  })
+  if (!id) {
+    error.value = 'Invalid user create new account'
+    return
+  } else {
+    fetch('https://shortify-rg0z.onrender.com/api/v1/auth/new-token/' + id, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then((data) => {
+      // check if data responsr is email is verified or invalid
+      if (data.statusText === "It's either this email is already verified or invalid") {
+        error.value = 'Email already verified or invalid'
+        return
+      } else if (data.statusText === 'Invalid token') {
+        error.value = 'Resend or type the correct otp'
+        return
+      } else {
+        error.value = ''
+        countDown.value = '10:00'
+        mins.value = 10
+        sec.value = 60
+        otpResent.value = true
+      }
+    })
+  }
 }
 </script>
 <template>
   <PageLayout>
     <template #header>
       <header
-        class="grid grid-col-5 p-3 mb-4 md:py-4 shadow-2xl md:px-5 gap-1 items-center bg-slate-50 dark:bg-primary-black"
+        class="flex justify-between p-3 mb-4 md:py-4 shadow-2xl md:px-5 gap-1 items-center bg-slate-50 dark:bg-primary-black"
       >
         <h1 class="dark:text-primary-blue font-bold">
           <router-link to="/"> Logo </router-link>
         </h1>
+        <nav class="col-start-5 justify-self-end dark:text-primary-pink">
+          <ul class="flex items-center gap-2">
+            <li class="px-4 py-2 rounded-3xl bg-primary-grey border border-dark-border text-white">
+              <router-link to="/login" class="text-white">Login</router-link>
+            </li>
+            <li class="px-4 py-2 rounded-3xl bg-primary-blue">
+              <router-link to="/signup" class="text-white">Register Now</router-link>
+            </li>
+          </ul>
+        </nav>
       </header>
     </template>
     <template #main>
@@ -141,16 +159,16 @@ const resend = () => {
               <span class="text-primary-blue">Resend again</span>
             </button>
           </p>
-        </form>
-        <div class="flex items-center justify-between mb-2">
-          <p v-if="otpResent" class="text-center text-xl font-medium dark:text-primary-lite">
+           <div v-if="otpResent" class="flex items-center justify-between mb-2">
+          <p  class="text-center text-xl font-medium dark:text-primary-lite">
             Otp has been sent again
           </p>
           <!-- show 10mins count down -->
-          <p class="text-center text-xl font-medium dark:text-primary-lite">
+          <p class="text-center text-xl font-medium  ju justify-end dark:text-primary-lite">
             Resend in {{ countDown }}
           </p>
         </div>
+        </form>  
       </main>
     </template>
   </PageLayout>
