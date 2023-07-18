@@ -46,7 +46,7 @@ const verifyEmail = async (e: Event) => {
     return
   } else {
     //  send data to server
-   
+  
     const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/verify-email/' + email.value, {
       method: 'POST',
       headers: {
@@ -65,20 +65,18 @@ const verifyEmail = async (e: Event) => {
       loading.value = false
       error.value = ''
       otp.value = ''
-      localStorage.removeItem('userId')
       router.push('/login')
     }
   }
 }
 const resend = (e: Event) => {
   e.preventDefault()
-  const id = localStorage.getItem('userId')
 
-  if (!id) {
+  if (email.value === '') {
     error.value = 'Invalid user create new account'
     return
   } else {
-    fetch('https://shortify-rg0z.onrender.com/api/v1/auth/new-token/' + id, {
+    fetch('https://shortify-rg0z.onrender.com/api/v1/auth/new-token/' + email.value, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
