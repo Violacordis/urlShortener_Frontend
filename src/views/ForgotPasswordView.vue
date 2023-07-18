@@ -26,7 +26,6 @@ const forgotPassword = async (e: Event) => {
         email: email.value
       })
     })
-    const data = await res.json()
     if (!res.ok) {
       error.value = 'Invalid credentials'
       loading.value = false
@@ -34,9 +33,7 @@ const forgotPassword = async (e: Event) => {
     } else {
       success.value = true
       loading.value = false
-          console.log(data)
-      localStorage.setItem('userId', data.data.id)
-      router.push('/verify')
+      router.push('/resetpassword')
     }
   }
 }
