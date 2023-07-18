@@ -30,6 +30,11 @@ const router = createRouter({
       component: () => import('../views/LoginView.vue')
     },
     {
+      path: "/resetpassword",
+      name: "resetpassword",
+      component: () => import('../views/ResetPasswordView.vue')
+    },
+    {
       path: "/signup",
       name: "register",
       component: () => import('../views/SignView.vue')
@@ -38,9 +43,10 @@ const router = createRouter({
       path: "/verify",
       name: "verify",
       component: () => import('../views/VerifyView.vue')
-    },{
-      path:"/user",
-      name:"user",
+    },
+    {
+      path: "/user",
+      name: "user",
       meta: {
         requiresAuth: true
       },
