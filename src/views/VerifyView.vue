@@ -4,7 +4,8 @@ import router from '@/router'
 
 import { ref } from 'vue'
 
-const username = ref('')
+const otp = ref('')
+const email = ref('')
 const error = ref('')
 const success = ref(false)
 const loading = ref(false)
@@ -34,25 +35,25 @@ const countDownTimer = setInterval(() => {
   }
 }, 1000)
 
-const signup = async (e: Event) => {
+const verifyEmail = async (e: Event) => {
   e.preventDefault()
   error.value = ''
   loading.value = true
 
-  if (username.value === '') {
+  if (otp.value === '' && email.value === '') {
     error.value = 'Please fill all the fields'
     loading.value = false
     return
   } else {
     //  send data to server
-    const id = localStorage.getItem('userId')
-    const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/verify-email/' + id, {
+   
+    const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/verify-email/' + email.value, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        token: username.value
+        token: otp.value
       })
     })
     if (!res.ok) {
@@ -63,7 +64,7 @@ const signup = async (e: Event) => {
       success.value = true
       loading.value = false
       error.value = ''
-      username.value = ''
+      otp.value = ''
       localStorage.removeItem('userId')
       router.push('/login')
     }
@@ -127,7 +128,7 @@ const resend = (e: Event) => {
         <!-- verify form -->
 
         <form
-          @submit="signup"
+          @submit="verifyEmail"
           class="bg-slate-300 w-full px-3 py-6 rounded-xl dark:bg-gray-800 shadow max-w-xl mx-auto"
         >
           <p class="text-center text-2xl mb-2 font-medium dark:text-primary-lite">Verification</p>
@@ -137,10 +138,16 @@ const resend = (e: Event) => {
           <p v-if="error" class="text-center text-red-500 mb-2 font-medium dark:text-primary-lite">
             {{ error }}
           </p>
+           <input
+            type="email"
+            placeholder="Enter email"
+            v-model="email"
+            class="block w-full mb-4 rounded-xl outline-none py-3 px-4 bg-slate-50 dark:bg-primary-grey dark:text-primary-lite"
+          />
           <input
             type="text"
             placeholder="OTP"
-            v-model="username"
+            v-model="otp"
             class="block w-full mb-4 rounded-xl outline-none py-3 px-4 bg-slate-50 dark:bg-primary-grey dark:text-primary-lite"
           />
           <input
