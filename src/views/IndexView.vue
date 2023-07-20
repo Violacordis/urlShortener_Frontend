@@ -34,9 +34,40 @@ import PageLayout from '@/layout/PageLayout.vue'
           </p>
         </div>
         <!-- list the benefits of shortening link -->
+        <div >
+          <h3 class="text-2xl text-center mb-5 font-bold dark:text-blue-600">Why us?</h3>
+         
+          <div class="grid gap-3 md:grid-cols-2 lg:grid-cols-3 lg:max-w-5xl lg:mx-auto">
+            <article class="border rounded-xl border-slate-900 px-3 py-5 dark:border-blue-600">
+              <h4 class="mb-3">
+                <span class="text-2xl font-bold dark:text-blue-600">1. </span>
+                <span class="text-2xl font-bold dark:text-primary-lite">Shorten</span>
+              </h4>
+              <p class="text-lg dark:text-primary-lite">
+                Shorten your long links into short and memorable links with your own custom alias.
+              </p>
+            </article>
+            <article class="border rounded-xl border-slate-900 px-3 py-5 dark:border-blue-600">
+              <h4 class="mb-3">
+                <span class="text-2xl font-bold dark:text-blue-600">2. </span>
+                <span class="text-2xl font-bold dark:text-primary-lite">Share</span>
+              </h4>
+              <p class="text-lg dark:text-primary-lite">
+                Share your customised links with your friends, family and colleagues.
+              </p>
+            </article>
+            <article class="border rounded-xl border-slate-900 px-3 py-5 dark:border-blue-600">
+              <h4 class="mb-3">
+                <span class="text-2xl font-bold dark:text-blue-600">3. </span>
+                <span class="text-2xl font-bold dark:text-primary-lite">Track</span>
+              </h4>
 
-        <div>
-          <article></article>
+              <p class="text-lg dark:text-primary-lite">
+                Track your links and see how many clicks you get. You can also see where your clicks
+                are coming from with our detailed statistics.
+              </p>
+            </article>
+          </div>
         </div>
       </main>
     </template>
