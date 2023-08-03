@@ -23,6 +23,8 @@ export const theme = {
       'dark-desktop': "url('/images/back-desktop.jpg')",
       'dark-tablet': "url('/images/back-tablet.jpg')",
       'user-image': "url('/images/icons8-user.svg')",
+      'show-password': "url('/images/icons8-eye-24.png')",
+      'hide-password': "url('/images/icons8-closed-eye-24.png')",
     }
   }
 }
