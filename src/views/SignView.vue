@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PageLayout from '@/layout/PageLayout.vue'
-import { useRouter } from 'vue-router';
+import ShowPassword from '@/components/ShowPassword.vue'
+import { useRouter } from 'vue-router'
 // signup function
 
 import { ref } from 'vue'
@@ -14,36 +15,34 @@ const loading = ref(false)
 const router = useRouter()
 const signup = async (e: Event) => {
   e.preventDefault()
-  if(!email.value || !password.value || !username.value) {
+  if (!email.value || !password.value || !username.value) {
     error.value = 'Please fill all the fields'
     return
-  }else{
-const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/signup', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      email: email.value,
-      password: password.value,
-      userName: username.value
-    })
-  })
-  const data = await res.json()
-  if (!res.ok) {
-    error.value = 'Invalid credentials'
-    console.log(data)
-    loading.value = false
-    return
   } else {
-    success.value = true
-    loading.value = false
-    localStorage.setItem('userId', data.data.id)
-    router.push('/verify')
+    const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+        userName: username.value
+      })
+    })
+    const data = await res.json()
+    if (!res.ok) {
+      error.value = 'Invalid credentials'
+      console.log(data)
+      loading.value = false
+      return
+    } else {
+      success.value = true
+      loading.value = false
+      localStorage.setItem('userId', data.data.id)
+      router.push('/verify')
+    }
   }
-    
-  }
-  
 }
 </script>
 <template>
@@ -55,7 +54,7 @@ const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/signup',
         <h1 class="dark:text-primary-blue font-bold">
           <router-link to="/"> Logo </router-link>
         </h1>
-         <router-link to="/verify" class="text-primary-blue font-bold">Verify email</router-link>
+        <router-link to="/verify" class="text-primary-blue font-bold">Verify email</router-link>
       </header>
     </template>
     <template #main>
@@ -81,12 +80,17 @@ const res = await fetch('https://shortify-rg0z.onrender.com/api/v1/auth/signup',
             v-model="username"
             class="block w-full mb-4 rounded-xl outline-none py-3 px-4 bg-slate-50 dark:bg-primary-grey dark:text-primary-lite"
           />
-          <input
-            type="password"
-            placeholder="Password"
-            v-model="password"
-            class="w-full mb-3 block rounded-xl outline-none px-4 py-3 bg-slate-50 dark:bg-primary-grey dark:text-primary-lite"
-          />
+          <label class="relative">
+            <input
+              type="password"
+              placeholder="Password"
+              v-model="password"
+              id="password"
+              class="w-full mb-3 block rounded-xl outline-none px-4 py-3 bg-slate-50 dark:bg-primary-grey dark:text-primary-lite"
+            />
+            <ShowPassword />
+          </label>
+
           <input
             type="submit"
             value="Sign up"

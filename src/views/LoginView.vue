@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import PageLayout from '@/layout/PageLayout.vue'
+import ShowPassword from '@/components/ShowPassword.vue'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
@@ -73,12 +74,17 @@ const login = async (e: Event) => {
             placeholder="Enter your email"
             class="block w-full mb-4 rounded-xl outline-none py-3 px-4 bg-slate-50 dark:bg-primary-grey dark:text-primary-lite"
           />
-          <input
-            type="password"
-            v-model="password"
-            placeholder="Password"
-            class="w-full mb-3 block rounded-xl outline-none px-4 py-3 bg-slate-50 dark:bg-primary-grey dark:text-primary-lite"
-          />
+          <label class="relative">
+            <input
+              type="password"
+              v-model="password"
+              placeholder="Password"
+              id="password"
+              class="w-full mb-3 block rounded-xl outline-none px-4 py-3 bg-slate-50 dark:bg-primary-grey dark:text-primary-lite"
+            />
+            <ShowPassword />
+          </label>
+
           <p class="text-right mb-8">
             <router-link to="/forgotpassword" class="text-primary-blue"
               >Forgot password?</router-link
