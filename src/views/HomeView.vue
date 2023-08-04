@@ -203,6 +203,12 @@ const displayQrcodeinNewTab = (image: string) => {
   const win = window.open()
   win?.document.write(`<img src="${image}" alt="QR Code" />`)
 }
+
+const gotoUrl = (url: string) => {
+  window.open(url, '_blank')
+  getUserUrls()
+}
+
 </script>
 <template>
   <PageLayout>
@@ -298,18 +304,14 @@ const displayQrcodeinNewTab = (image: string) => {
                   <td
                     class="whitespace-nowrap pr-9 py-4 pl-4 flex items-center justify-center gap-2 brightness-0 dark:brightness-110"
                   >
-                    <a
+                    <button
                       :class="
                         userUrl.isActive ? 'cursor-pointer' : ' text-slate-200 cursor-not-allowed'
                       "
-                      :target="userUrl.isActive ? '_blank' : '_self'"
-                      :href="
-                        userUrl.isActive
-                          ? 'https://shortify-rg0z.onrender.com/' + userUrl.shortUrl
-                          : '#'
-                      "
-                      >{{ userUrl.shortUrl }}</a
-                    >
+                      @click="gotoUrl('https://shortify-rg0z.onrender.com/' + userUrl.shortUrl)"
+                      :disabled="!userUrl.isActive"
+                      >{{ userUrl.shortUrl }}
+                      </button>
                     <button @click="copyToClipboard" class="cursor-pointer w-6 h-6">
                       <img src="/images/copy.svg" alt="copy" />
                     </button>
