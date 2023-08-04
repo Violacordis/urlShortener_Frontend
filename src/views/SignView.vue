@@ -33,7 +33,6 @@ const signup = async (e: Event) => {
     const data = await res.json()
     if (!res.ok) {
       error.value = 'Invalid credentials'
-      console.log(data)
       loading.value = false
       return
     } else {
