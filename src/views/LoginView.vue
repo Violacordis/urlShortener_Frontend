@@ -33,6 +33,7 @@ const login = async (e: Event) => {
     const data = await res.json()
     if (!res.ok) {
       error.value = 'Invalid credentials'
+        loading.value = false
       return
     } else {
       localStorage.setItem('token', data.data.access_token)
