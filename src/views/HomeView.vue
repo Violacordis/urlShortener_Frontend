@@ -130,6 +130,7 @@ const shortenUrl = async (e: Event) => {
         return
       } else {
         showForm.value = false
+        getUserUrls()
       }
     } else {
       const res = await fetch(`https://shortify-rg0z.onrender.com/api/v1/url/${url.value.id}`, {
