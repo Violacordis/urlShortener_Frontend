@@ -80,6 +80,7 @@ const copyToClipboard = (e: Event) => {
   const el = e.target as HTMLInputElement
   el.select()
   document.execCommand('copy')
+  alert('copied')
 }
 
 const deleteUrl = async (id: string) => {
