@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UserComponent from '@/components/UserComponent.vue';
+import UserComponent from '@/components/UserComponent.vue'
 import PageLayout from '@/layout/PageLayout.vue'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -16,6 +16,7 @@ const url = ref({
   isActive: false,
   id: ''
 })
+const error = ref('')
 const userUrls = ref([] as Url[])
 const token = localStorage.getItem('token') || ''
 const showUserSettings = ref(false)
@@ -127,6 +128,7 @@ const shortenUrl = async (e: Event) => {
         body: body
       })
       if (!res.ok) {
+        error.value = 'Invalid Url'  
         return
       } else {
         showForm.value = false
@@ -196,8 +198,8 @@ const closeForm = () => {
     id: ''
   }
 }
-const displayQrcodeinNewTab = (image:string) => {
-// display base64 qrcode in new tab
+const displayQrcodeinNewTab = (image: string) => {
+  // display base64 qrcode in new tab
   const win = window.open()
   win?.document.write(`<img src="${image}" alt="QR Code" />`)
 }
@@ -223,7 +225,7 @@ const displayQrcodeinNewTab = (image:string) => {
           <span class="sr-only">Show user setting</span>
         </button>
         <!-- user settings -->
-       <UserComponent v-if="showUserSettings" />
+        <UserComponent v-if="showUserSettings" />
       </header>
     </template>
     <template #main>
@@ -244,19 +246,23 @@ const displayQrcodeinNewTab = (image:string) => {
               type="text"
               v-model="url.title"
               placeholder="Enter the title here"
-              class="rounded-3xl mb-4 w-full p-2 bg-slate-50 dark:bg-primary-grey"
+              class="rounded-2xl mb-4 w-full py-2 px-3 bg-slate-50 dark:bg-primary-grey"
             />
-            <input
-              type="url"
-              v-model="url.longUrl"
-              placeholder="Enter the link here"
-              class="rounded-3xl mb-4 w-full p-2 bg-slate-50 dark:bg-primary-grey"
-            />
+            <label>
+              <span v-if="error" class="text-red-500">{{ error }}</span>
+              <input
+                type="url"
+                v-model="url.longUrl"
+                placeholder="Enter the link here"
+                class="rounded-2xl mb-4 w-full py-2 px-3 bg-slate-50 dark:bg-primary-grey"
+              />
+            </label>
+
             <input
               type="text"
               v-model="url.customUrl"
               placeholder="Customize your link here (optional)"
-              class="rounded-3xl mb-4 w-full p-2 bg-slate-50 dark:bg-primary-grey"
+              class="rounded-2xl mb-4 w-full py-2 px-3 bg-slate-50 dark:bg-primary-grey"
             />
             <input
               type="submit"
@@ -319,11 +325,14 @@ const displayQrcodeinNewTab = (image:string) => {
                     </button>
                     <div v-else class="flex items-center gap-4">
                       <!-- There are ways to work around this issue, such as converting the Base64 data into a Blob object and using that to navigate to the data  -->
-                      
-   
 
-                         <img class="w-8 mx-auto" :src="userUrl.qrcode.image" alt="QR Code" @click="displayQrcodeinNewTab(userUrl?.qrcode?.image)"/>
-              
+                      <img
+                        class="w-8 mx-auto"
+                        :src="userUrl.qrcode.image"
+                        alt="QR Code"
+                        @click="displayQrcodeinNewTab(userUrl?.qrcode?.image)"
+                      />
+
                       <button
                         title="delete qrcode"
                         @click="deleteQrCode(userUrl.id)"
